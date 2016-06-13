@@ -11,7 +11,7 @@ redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
 var artistIds = require('./artist-ids')
   , http = require('http')
   , JSONStream = require('JSONStream')
-  , limit = 10 // The number of songs to retrieve for each artist
+  , limit = 30 // The number of songs to retrieve for each artist
   , parser = JSONStream.parse(['results', true])
   , popIds = artistIds.pop
   , rapIds = artistIds.rapper
