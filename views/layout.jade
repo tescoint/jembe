@@ -3,28 +3,17 @@ html
   head
     meta(charset="utf-8")
     block title
-    meta(name="author", content="Luigi Pinca")
+    meta(name="author", content="Tes Sal")
     meta(name="description", content="Simple, realtime, multiplayer, competitive music listening game. Guess the song and prove your music knowledge!")
     meta(property="og:description", content="Simple, realtime, multiplayer, competitive music listening game. Guess the song and prove your music knowledge!")
     meta(property="og:image", content="https://dl.dropbox.com/u/58444696/binb-logo-200.png")
-    meta(property="og:title", content="binb")
+    meta(property="og:title", content="jembe")
     meta(property="og:type", content="game")
-    meta(property="og:url", content="https://binb.co/")
+    meta(property="og:url", content="https://jembe.herokuapp.com/")
     link(href="//fonts.googleapis.com/css?family=Droid+Sans:400,700", rel="stylesheet")
     link(href="/static/css/bootstrap.min.css", rel="stylesheet")
     link(href="/static/css/style.css", rel="stylesheet")
-    script.
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-29865853-1']);
-      _gaq.push(['_trackPageview']);
-      (function() {
-        var ga = document.createElement('script');
-        ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') +
-          '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(ga, s);
-      })();
+    
   body
     .navbar.navbar-inverse.navbar-fixed-top
       .navbar-inner
@@ -37,23 +26,10 @@ html
       block sections
       footer
         #footer-inner
-          #copy &copy; 2012-2016 Luigi Pinca
-          iframe#facebook-button(allowTransparency="true", frameborder="0", scrolling="no",
-            src!="//www.facebook.com/plugins/like.php?action=like&amp;colorscheme=light&amp;href=https%3A%2F%2Fbinb.co&amp;layout=button_count&amp;locale=en_US&amp;share=true&amp;show_faces=false")
-          iframe#twitter-button(allowtransparency="true", frameborder="0", scrolling="no",
-            src="//platform.twitter.com/widgets/tweet_button.html?url=https%3A%2F%2Fbinb.co")
-          iframe#github-button(allowtransparency="true", frameborder="0", scrolling="0",
-            src="//ghbtns.com/github-btn.html?user=lpinca&repo=binb&type=watch&count=true")
+          #copy &copy; 2012-2016 Tes Sal
+          
     block media
     block scripts
       script(src="//cdn.jsdelivr.net/jquery/2.2/jquery.min.js")
       script(src="/static/js/bootstrap.min.js")
-    script.
-      var uvOptions = {};
-      (function() {
-        var uv = document.createElement('script');
-        uv.type = 'text/javascript'; uv.async = true;
-        uv.src ='//widget.uservoice.com/LSMjFAQRifhD6BjOG2KWw.js';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(uv, s);
-      })();
+    
