@@ -9,7 +9,7 @@ var banHandler = require('./lib/middleware/ban-handler')
   , express = require('express')
   , favicon = require('serve-favicon')
   , http = require('http')
-  , port = require('./config').port
+  , port =  Number(process.env.PORT || 8138)
   , session = require('express-session')
   , RedisStore = require('connect-redis')(session)
   , secret = process.env.SITE_SECRET || 'shhhh, very secret'
@@ -31,6 +31,7 @@ var app = express()
 
 // Configuration
 app.set('view engine', 'jade');
+app.set('port', process.env.PORT || 8138);
 app.use('/static', express.static(pub, {maxAge: 2419200000})); // 4 weeks = 2419200000 ms
 app.use(favicon(pub + '/img/favicon.ico', {maxAge: 2419200000}));
 app.use(banHandler);
@@ -82,5 +83,5 @@ require('./lib/rooms')({
 
 // Begin accepting connections
 server.listen(port, function() {
-  console.info('binb server listening on port ' + port);
+  console.info('Jembe server listening on port ' + port);
 });
