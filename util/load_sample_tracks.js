@@ -3,26 +3,31 @@
 /**
  * Module dependencies.
  */
+var redis = require('redis');
+var url = require('url');
+var redisURL = url.parse(process.env.REDISCLOUD_URL);
+redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true});
 
 var artistIds = require('./artist-ids')
   , http = require('http')
   , JSONStream = require('JSONStream')
-  , limit = 7 // The number of songs to retrieve for each artist
+  , limit = 10 // The number of songs to retrieve for each artist
   , parser = JSONStream.parse(['results', true])
   , popIds = artistIds.pop
-  , rapIds = artistIds.rap
-  , rc = require('redis').createClient()
-  , rockIds = artistIds.rock
+  , rapIds = artistIds.rapper
+  , rc = redis.createClient(redisURL.port, redisURL.hostname, {no_ready_check: true})
+  , oldiesIds = artistIds.oldies
+  , reggaeIds = artistIds.reggae
   , rooms = require('../config').rooms
   , score
   , skip = 0 // Skip counter
   , songId = 0;
-
+rc.auth(redisURL.auth.split(":")[1]);
 var options = {
   headers: {'content-type': 'application/json'},
   host: 'itunes.apple.com',
   // Look up multiple artists by their IDs and get `limit` songs for each one
-  path: '/lookup?id='+popIds.concat(rapIds, rockIds).join()+'&entity=song&limit='+limit,
+  path: '/lookup?id='+popIds.concat(rapIds, oldiesIds).join()+'&entity=song&limit='+limit,
   port: 80
 };
 
@@ -38,14 +43,14 @@ var updateRooms = function(artistId) {
     // Set the skip counter (there is no need to update the rooms for the next pop artists)
     skip = popIds.length - 1;
   }
-  else if (artistId === rapIds[0]) {
-    rooms.push('rap');
-    skip = rapIds.length - 1;
+  else{
+    rooms.push('rock','oldies');
+    skip = oldiesIds.length - 1;
   }
-  else {
-    rooms.push('oldies', 'rock');
-    skip = rockIds.length - 1;
-  }
+  // else if (artistId === gospelIds[0]){
+  //   rooms.push('gospel');
+  //   skip = gospelIds.length - 1;
+  // }
 };
 
 parser.on('data', function(track) {
@@ -66,6 +71,7 @@ parser.on('data', function(track) {
     'artworkUrl60', track.artworkUrl60,
     'artworkUrl100', track.artworkUrl100
   );
+  //process.stdout.write(track.artistName);
 
   rooms.forEach(function(room) {
     var _score = (room === 'mixed') ? songId : score;
